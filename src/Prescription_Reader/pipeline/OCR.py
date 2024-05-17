@@ -1,5 +1,5 @@
 from paddleocr import PaddleOCR, draw_ocr
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import cv2
 import os
 

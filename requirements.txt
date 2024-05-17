@@ -3,3 +3,4 @@ paddleocr>=2.0.1
 matplotlib
 gTTS
 langchain
+streamlit
