@@ -22,20 +22,20 @@ def read_text_from_prescription(img_path):
     for i in texts:
         combined_text_data = combined_text_data + i + " "
 
-    return combined_text_data
+    return combined_text_data,boxes,texts,scores,img_path
 
 def show_detection_with_score(img_path,boxes,texts,scores):
 
     # Reading the image
-    img2 = cv2.imread(img_path)
+    img = cv2.imread(img_path)
 
-    img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     font_path2 = os.path.join('PaddleOCR', 'doc', 'fonts', 'latin.ttf')
 
     # The detection text with bounding box and prediction scores
     
-    annotated2 = draw_ocr(img2, boxes, texts, scores, font_path=font_path2)
+    annotated2 = draw_ocr(img, boxes, texts, scores, font_path=font_path2)
     return annotated2
     plt.figure(figsize=(100,100))
     plt.imshow(annotated2)
