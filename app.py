@@ -1,4 +1,5 @@
 from src.Prescription_Reader.pipeline.OCR import read_text_from_prescription,show_detection_with_score
+from src.Prescription_Reader.pipeline.refine_text_output import refined_output
 import gradio as gr
 import matplotlib.pyplot as plt
 from src.Prescription_Reader.pipeline.text_to_audio import generate_audio
@@ -18,21 +19,26 @@ uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"]
 # scores=[]
 # image_np=np.array(image_np)
 if uploaded_image is not None:
-    # Display uploaded image
+    # Store uploaded image for further operation
     image = Image.open(uploaded_image)
-    #st.image(image, caption="Uploaded Image", use_column_width=True)
-    
+
     # Convert image to numpy array
     image_np = np.array(image)
-    #print(read_text_from_prescription(image_np))
+    
+    #
     extracted_text,boxes,texts,scores = read_text_from_prescription(image_np)
 
-    st.write(f"Recognized Text from Image: {extracted_text}" ) 
+    st.write(f"Recognized Text from Image:\n {extracted_text}" ) 
 
     annotated_img = show_detection_with_score(image_np,boxes,texts,scores) 
-    st.image(annotated_img, caption="Uploaded Image", use_column_width=True) 
-    print("*******************")
-    print(extracted_text)
+
+    im_show = Image.fromarray(annotated_img)
+    st.image(im_show, caption="Uploaded Image", use_column_width=True)
+    refined_text = refined_output(extracted_text) 
+
+    st.write(f"Important information from the prescription:\n {refined_text}" )
+    # print("*******************")
+    # print(extracted_text)
  
 #extracted_text,boxes,texts,scores = read_text_from_prescription(image_np)
 
