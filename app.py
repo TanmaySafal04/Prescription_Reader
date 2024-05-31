@@ -24,11 +24,17 @@ if uploaded_image is not None:
 
     # Convert image to numpy array
     image_np = np.array(image)
-    
+    print("*******************************************************************************************")
+
+    print(image_np.shape)
+
+    print("********************************************************************************************")
     #
     extracted_text,boxes,texts,scores = read_text_from_prescription(image_np)
 
     st.write(f"Recognized Text from Image:\n {extracted_text}" ) 
+
+    print()
 
     annotated_img = show_detection_with_score(image_np,boxes,texts,scores) 
 

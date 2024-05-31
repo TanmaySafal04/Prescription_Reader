@@ -1,5 +1,6 @@
 from langchain_community.llms import HuggingFaceEndpoint
 import os
+from langchain_core.tracers.context import tracing_v2_enabled
 #from dotenv import load_dotenv
 
 def refined_output(text):
@@ -8,6 +9,15 @@ def refined_output(text):
     
     # Get the Hugging Face token from the environment variable
     # hugging_face_token = os.getenv('HUGGING_FACE_TOKEN')
+    unique_id="a3aff21a-ffa9-4a7e-a870-b2679735e9b6"
+    #Langsmith Tracing
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+    os.environ["LANGCHAIN_PROJECT"] = f"Tracing Walkthrough - {unique_id}"
+    os.environ["LANGCHAIN_API_KEY"] = "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"
+
+    
+
     hugging_face_token = "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"
     
     # Ensure the token is available
