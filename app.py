@@ -4,6 +4,7 @@ import gradio as gr
 import matplotlib.pyplot as plt
 from src.Prescription_Reader.pipeline.text_to_audio import generate_audio
 from src.Prescription_Reader.pipeline.refine_text_output import refined_output
+from src.Prescription_Reader.pipeline.cvt_to_RGB import convert_to_rgb
 import base64
 import streamlit as st
 from PIL import Image
@@ -24,19 +25,20 @@ if uploaded_image is not None:
 
     # Convert image to numpy array
     image_np = np.array(image)
+    converted_img = convert_to_rgb(image_np)
     print("*******************************************************************************************")
 
-    print(image_np.shape)
+    print(converted_img.shape)
 
     print("********************************************************************************************")
     #
-    extracted_text,boxes,texts,scores = read_text_from_prescription(image_np)
+    extracted_text,boxes,texts,scores = read_text_from_prescription(converted_img)
 
     st.write(f"Recognized Text from Image:\n {extracted_text}" ) 
 
     print()
 
-    annotated_img = show_detection_with_score(image_np,boxes,texts,scores) 
+    annotated_img = show_detection_with_score(converted_img,boxes,texts,scores) 
 
     im_show = Image.fromarray(annotated_img)
     st.image(im_show, caption="Uploaded Image", use_column_width=True)
@@ -46,16 +48,6 @@ if uploaded_image is not None:
     # print("*******************")
     # print(extracted_text)
  
-#extracted_text,boxes,texts,scores = read_text_from_prescription(image_np)
-
-
-#st.image(im_show, caption='OCR Result', use_column_width=True)
-
-# # Displays detcted texts
-# bb_annotation = show_detection_with_score(image_np,boxes,texts,scores)
-# plt.figure(figsize=(100,100))
-# display_img = plt.imshow(bb_annotation)
-# st.image(display_img, caption="Uploaded Image", use_column_width=True)
 
 # #Converts the BytesIO audio data to a base64-encoded string.
 # #Embeds the base64-encoded audio data in an HTML <audio> element and uses st.markdown to render it.
