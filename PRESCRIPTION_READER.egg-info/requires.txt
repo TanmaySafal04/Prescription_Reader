@@ -1,0 +1,12 @@
+gTTS
+langchain
+streamlit
+python-dotenv
+PyPDF2
+dotenv
+paddlepaddle
+paddleocr
+streamlit
+transformers
+langsmith
+langchain_community

@@ -1,0 +1,16 @@
+setup.py
+PRESCRIPTION_READER.egg-info/PKG-INFO
+PRESCRIPTION_READER.egg-info/SOURCES.txt
+PRESCRIPTION_READER.egg-info/dependency_links.txt
+PRESCRIPTION_READER.egg-info/requires.txt
+PRESCRIPTION_READER.egg-info/top_level.txt
+src/__init__.py
+src/config/__init__.py
+src/pipeline/OCR.py
+src/pipeline/__init__.py
+src/pipeline/cvt_to_RGB.py
+src/pipeline/refine_text_output.py
+src/pipeline/text_to_audio.py
+src/testing/__init__.py
+src/testing/test.py
+src/utils/__init__.py

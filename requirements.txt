@@ -6,6 +6,6 @@ langchain
 streamlit
 langchain_community
 python-dotenv
-dotenv
 transformers
 langsmith
+-e .

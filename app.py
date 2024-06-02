@@ -1,24 +1,21 @@
-from src.Prescription_Reader.pipeline.OCR import read_text_from_prescription,show_detection_with_score
-from src.Prescription_Reader.pipeline.refine_text_output import refined_output
+from src.pipeline.OCR import read_text_from_prescription,show_detection_with_score
+from src.pipeline.refine_text_output import refined_output
 import gradio as gr
 import matplotlib.pyplot as plt
-from src.Prescription_Reader.pipeline.text_to_audio import generate_audio
-from src.Prescription_Reader.pipeline.refine_text_output import refined_output
-from src.Prescription_Reader.pipeline.cvt_to_RGB import convert_to_rgb
+from src.pipeline.text_to_audio import generate_audio
+from src.pipeline.refine_text_output import refined_output
+from src.pipeline.cvt_to_RGB import convert_to_rgb
 import base64
 import streamlit as st
 from PIL import Image
 import numpy as np
+#from dotenv import load_dotenv
+#load_dotenv()
 
 # Image input section
-st.header("Image Uploader")
+st.header("Upload Prescription Here")
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
-# extracted_text=""
-# boxes=[]
-# texts=[]
-# scores=[]
-# image_np=np.array(image_np)
 if uploaded_image is not None:
     # Store uploaded image for further operation
     image = Image.open(uploaded_image)
@@ -26,17 +23,10 @@ if uploaded_image is not None:
     # Convert image to numpy array
     image_np = np.array(image)
     converted_img = convert_to_rgb(image_np)
-    print("*******************************************************************************************")
-
-    print(converted_img.shape)
-
-    print("********************************************************************************************")
-    #
+   
     extracted_text,boxes,texts,scores = read_text_from_prescription(converted_img)
 
     st.write(f"Recognized Text from Image:\n {extracted_text}" ) 
-
-    print()
 
     annotated_img = show_detection_with_score(converted_img,boxes,texts,scores) 
 

@@ -1,24 +1,25 @@
 from langchain_community.llms import HuggingFaceEndpoint
 import os
 from langchain_core.tracers.context import tracing_v2_enabled
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
+
 
 def refined_output(text):
     # Load environment variables from .env file
-    # load_dotenv()
+    load_dotenv()
     
     # Get the Hugging Face token from the environment variable
     # hugging_face_token = os.getenv('HUGGING_FACE_TOKEN')
-    unique_id="a3aff21a-ffa9-4a7e-a870-b2679735e9b6"
+    unique_id=os.getenv("UNIQUE_ID")
     #Langsmith Tracing
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
     os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
     os.environ["LANGCHAIN_PROJECT"] = f"Tracing Walkthrough - {unique_id}"
-    os.environ["LANGCHAIN_API_KEY"] = "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"
+    os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
 
     
 
-    hugging_face_token = "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"
+    hugging_face_token = os.getenv('HUGGING_FACE_TOKEN')
     
     # Ensure the token is available
     if hugging_face_token is None:
@@ -28,7 +29,7 @@ def refined_output(text):
     #os.environ['HUGGING_FACE_HUB_TOKEN'] = hugging_face_token
     
     # Initialize the Hugging Face endpoint
-    llm2 = HuggingFaceEndpoint(repo_id="mistralai/Mistral-7B-Instruct-v0.2",huggingfacehub_api_token="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", top_k=1)
+    llm2 = HuggingFaceEndpoint(repo_id="mistralai/Mistral-7B-Instruct-v0.2",huggingfacehub_api_token=hugging_face_token, top_k=1)
     
     from langchain.chains import LLMChain
     from langchain_core.prompts import PromptTemplate
