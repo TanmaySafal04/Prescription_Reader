@@ -4,7 +4,7 @@ from langchain_core.tracers.context import tracing_v2_enabled
 from dotenv import load_dotenv
 
 
-def refined_output(text):
+def refined_output(text,max_tokens):
     # Load environment variables from .env file
     load_dotenv()
     
@@ -29,7 +29,7 @@ def refined_output(text):
     #os.environ['HUGGING_FACE_HUB_TOKEN'] = hugging_face_token
     
     # Initialize the Hugging Face endpoint
-    llm2 = HuggingFaceEndpoint(repo_id="mistralai/Mistral-7B-Instruct-v0.2",huggingfacehub_api_token=hugging_face_token, top_k=1)
+    llm2 = HuggingFaceEndpoint(repo_id="mistralai/Mistral-7B-Instruct-v0.2",huggingfacehub_api_token=hugging_face_token, top_k=1,max_new_tokens=max_tokens)
     
     from langchain.chains import LLMChain
     from langchain_core.prompts import PromptTemplate

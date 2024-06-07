@@ -12,10 +12,13 @@ import numpy as np
 #load_dotenv()
 
 # Image input section
+
+max_tokens = st.number_input("Enter number of tokens in which you want your reponse")
 st.header("Upload Prescription Here")
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
 if uploaded_image is not None:
+
     # Store uploaded image for further operation
     image = Image.open(uploaded_image)
 
@@ -31,7 +34,9 @@ if uploaded_image is not None:
 
     im_show = Image.fromarray(annotated_img)
     st.image(im_show, caption="Uploaded Image", use_column_width=True)
-    refined_text = refined_output(extracted_text) 
+
+    
+    refined_text = refined_output(extracted_text,max_tokens) 
 
     st.write(f"Important information from the prescription:\n {refined_text}" )
     # print("*******************")
