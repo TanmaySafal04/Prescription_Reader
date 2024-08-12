@@ -12,54 +12,58 @@ import numpy as np
 #load_dotenv()
 
 # Image input section
+try:
+     
 
-max_tokens = st.number_input("Enter number of tokens in which you want your reponse")
-st.header("Upload Prescription Here")
-uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+    max_tokens = st.number_input("Enter number of tokens in which you want your reponse")
+    st.header("Upload Prescription Here")
+    uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
-if uploaded_image is not None:
+    if uploaded_image is not None:
 
-    # Store uploaded image for further operation
-    image = Image.open(uploaded_image)
+        # Store uploaded image for further operation
+        image = Image.open(uploaded_image)
 
-    # Convert image to numpy array
-    image_np = np.array(image)
-    converted_img = convert_to_rgb(image_np)
-   
-    extracted_text,boxes,texts,scores = read_text_from_prescription(converted_img)
-
-    st.write(f"Recognized Text from Image:\n {extracted_text}" ) 
-
-    annotated_img = show_detection_with_score(converted_img,boxes,texts,scores) 
-
-    im_show = Image.fromarray(annotated_img)
-    st.image(im_show, caption="Uploaded Image", use_column_width=True)
-
+        # Convert image to numpy array
+        image_np = np.array(image)
+        converted_img = convert_to_rgb(image_np)
     
-    refined_text = refined_output(extracted_text,max_tokens) 
+        extracted_text,boxes,texts,scores = read_text_from_prescription(converted_img)
 
-    st.write(f"Important information from the prescription:\n {refined_text}" )
-    # print("*******************")
-    # print(extracted_text)
- 
+        st.write(f"Recognized Text from Image:\n {extracted_text}" ) 
 
-# #Converts the BytesIO audio data to a base64-encoded string.
-# #Embeds the base64-encoded audio data in an HTML <audio> element and uses st.markdown to render it.
+        annotated_img = show_detection_with_score(converted_img,boxes,texts,scores) 
 
-    def audio_player(audio_data):
-        audio_base64 = base64.b64encode(audio_data.read()).decode('utf-8')
-        audio_html = f'''
-            <audio controls>
-                <source src="data:audio/mpeg;base64,{audio_base64}" type="audio/mpeg">
-            </audio>
-        '''
-        st.markdown(audio_html, unsafe_allow_html=True)
+        im_show = Image.fromarray(annotated_img)
+        st.image(im_show, caption="Uploaded Image", use_column_width=True)
+
+        
+        refined_text = refined_output(extracted_text,max_tokens) 
+
+        st.write(f"Important information from the prescription:\n {refined_text}" )
+        # print("*******************")
+        # print(extracted_text)
+    
+
+    # #Converts the BytesIO audio data to a base64-encoded string.
+    # #Embeds the base64-encoded audio data in an HTML <audio> element and uses st.markdown to render it.
+
+        def audio_player(audio_data):
+            audio_base64 = base64.b64encode(audio_data.read()).decode('utf-8')
+            audio_html = f'''
+                <audio controls>
+                    <source src="data:audio/mpeg;base64,{audio_base64}" type="audio/mpeg">
+                </audio>
+            '''
+            st.markdown(audio_html, unsafe_allow_html=True)
 
 
     if st.button("Play Audio"):
             audio_io = generate_audio(refined_text)
             audio_player(audio_io)
 
+except Exception as e:
+     raise("Please Enter a valid Image containing Textual data")
 
 
 

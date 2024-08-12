@@ -8,7 +8,6 @@ Requires-Dist: langchain
 Requires-Dist: streamlit
 Requires-Dist: python-dotenv
 Requires-Dist: PyPDF2
-Requires-Dist: dotenv
 Requires-Dist: paddlepaddle
 Requires-Dist: paddleocr
 Requires-Dist: streamlit
