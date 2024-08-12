@@ -16,7 +16,7 @@ try:
      
 
     max_tokens = st.number_input("Enter number of tokens in which you want your reponse")
-    st.secrets["HUGGING_FACE_TOKEN","LANGCHAIN_API_KEY","UNIQUE_ID"]
+    #st.secrets["HUGGING_FACE_TOKEN","LANGCHAIN_API_KEY","UNIQUE_ID"]
     st.header("Upload Prescription Here")
 
     uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
